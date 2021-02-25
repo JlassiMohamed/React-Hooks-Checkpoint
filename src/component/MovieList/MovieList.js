@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import { moviesData } from "../../Constant/Data";
-import Footer from "../../Footer/Footer";
+import Footer from "../Footer/Footer";
 import AddMovie from "../AddMovie/AddMovie";
-import Filter from "../Filter/Filter";
+import NavSearch from "../NavSearch/NavSearch";
 import MovieCard from "../MovieCard/MovieCard";
 import "./MovieList.css";
 
 const MovieList = () => {
-  const [search, setSearch] = useState({ inputText: "" });
+  const [search, setSearch] = useState("");
   const [rating, setRating] = useState(0);
-  const handleSearch = (newSearch) => {
-    setSearch(newSearch);
-  };
-  const handleRating = (newRating) => {
-    setRating(newRating);
-  };
+
   const [movies, setMovies] = useState(moviesData);
   const handleItem = (item) => {
     setMovies([...movies, item]);
@@ -22,22 +17,20 @@ const MovieList = () => {
 
   return (
     <div>
-      <Filter handleSearch={handleSearch} handleRating={handleRating} />
+      <NavSearch setSearch={setSearch} setRating={setRating} />
       <div className="MovieList">
         {movies
           .filter(
             (movie) =>
-              movie.title
-                .toLowerCase()
-                .includes(search.inputText.toLowerCase()) &&
+              movie.title.toLowerCase().includes(search.toLowerCase()) &&
               movie.rating >= rating
           )
           .map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
           ))}
-        <AddMovie handleItem={handleItem} />
+        <AddMovie handleItem={handleItem} key={Math.random()} />
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

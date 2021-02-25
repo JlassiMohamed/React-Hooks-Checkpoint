@@ -26,94 +26,80 @@ const AddMovie = ({ handleItem }) => {
   const [title, setTitle] = useState("");
   const [rating, setRating] = useState("");
   const [img, setImg] = useState("");
-  const [description, setDescription] = useState("");
-  const handleTitle = (e) => {
-    setTitle(e.target.value);
-  };
-  const handleRating = (e) => {
-    setRating(e.target.value);
-  };
-  const handleImage = (e) => {
-    setImg(e.target.value);
-  };
-  const handleDescription = (e) => {
-    setDescription(e.target.value);
-  }
+  const [info, setInfo] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleItem({ title, rating, img, description });
+    handleItem({ title, rating, img, info });
     handleClose();
   };
 
-    const classes = useStyles();
-    // getModalStyle is not a pure function, we roll the style only on the first render
-    const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
+  // getModalStyle is not a pure function, we roll the style only on the first render
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
 
-    const handleOpen = () => {
-      setOpen(true);
-    };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const body = (
-      <div style={modalStyle} className={classes.paper}>
-        <h2 id="simple-modal-title">Add your Movie</h2>
-        <form onSubmit={handleSubmit}>
-          <label>Poster Url:</label>
-          <input
-            onChange={handleImage}
-            value={img}
-            placeholder="Enter the poster's url"
-          />
-          <br />
-          <label>Name:</label>
-          <input
-            onChange={handleTitle}
-            value={title}
-            placeholder="type the movie's name"
-          />
-          <br />
-          <label>Description:</label>
-          <input
-            onChange={handleDescription}
-            value={description}
-            placeholder="Describe your movie"
-          />
-          <br />
-          <label>Rate:</label>
-          <input
-            type="number"
-            onChange={handleRating}
-            value={rating}
-            placeholder="Rate your movie"
-            min={0}
-            max={5}
-          />
-          <br />
-          <button>Add</button>
-        </form>
-      </div>
-    );
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <h2 id="simple-modal-title">Add your Movie</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Poster Url:</label>
+        <input
+          onChange={(e) => setImg(e.target.value)}
+          value={img}
+          placeholder="Enter the poster's url"
+        />
+        <br />
+        <label>Name:</label>
+        <input
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          placeholder="type the movie's name"
+        />
+        <br />
+        <label>Description:</label>
+        <input
+          onChange={(e) => setInfo(e.target.value)}
+          value={info}
+          placeholder="Describe your movie"
+        />
+        <br />
+        <label>Rate:</label>
+        <input
+          type="number"
+          onChange={(e) => setRating(e.target.value)}
+          value={rating}
+          placeholder="Rate your movie"
+          min={0}
+          max={5}
+        />
+        <br />
+        <button>Add</button>
+      </form>
+    </div>
+  );
 
   return (
     <div>
-        <button
-          onClick={handleOpen}
-          style={{ width: "18rem", height: "36rem" }}
-        >
-          [ + ]
-        </button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          {body}
-        </Modal>
+      <button onClick={handleOpen} style={{ width: "18rem", height: "36rem" }}>
+        [ + ]
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
     </div>
   );
 };
